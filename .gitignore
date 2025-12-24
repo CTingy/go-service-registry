@@ -1,0 +1,54 @@
+# --- Go (Binaries) ---
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+test
+main
+
+# executables in specific directories
+/server/server
+/client/client
+/client/sdk_test
+
+# --- Test ---
+*.out
+*.test
+coverage.txt
+
+# --- Go Modules ---
+# usually keep go.mod & go.sum. Ignore the vendor/ directory if exists.
+vendor/
+
+# Go Workspaces
+go.work
+go.work.sum
+
+# --- VS Code ---
+# .vscode/
+# !.vscode/settings.json
+# !.vscode/tasks.json
+# !.vscode/launch.json
+# !.vscode/extensions.json
+
+# IntelliJ / GoLand
+.idea/
+*.iml
+
+# Vim / Emacs
+*.swp
+*.swo
+*~
+
+# --- OS (Mac M1) ---
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# --- gRPC / Protobuf strategy ---
+# temporaily NOT ignore generated protobuf files
+# *.pb.go
+# *_grpc.pb.go
