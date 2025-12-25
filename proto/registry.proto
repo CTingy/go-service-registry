@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package registry;
+
+// location of compiled code
+option go_package = "go-service-registry/proto";
+
+// service interfaces
+service Registry {
+  // Unary Call + Sharded Map
+  rpc Register (RegisterReq) returns (RegisterResp);
+
+  // renew (Unary Call)
+  // Client calls
+  rpc Heartbeat (HeartbeatReq) returns (Empty);
+
+  // Discover (Unary Call)
+  // Client-side Polling
+  rpc Discover (DiscoverReq) returns (DiscoverResp);
+}
+
+// Request & Response schema (Message)
+
+message RegisterReq {
+  string service_name = 1; // Field 1: service name
+  string endpoint = 2;     // Field 2: IP:Port. e.g. "10.0.0.1:8080"
+}
+
+message RegisterResp {
+  // Heartbeat interval. Defined on the server side
+  int32 ttl = 1; 
+}
+
+message HeartbeatReq {
+  string service_name = 1;
+  string endpoint = 2; // Composite Key: service_name + endpoint
+}
+
+message DiscoverReq {
+  string service_name = 1; // which service I discover
+}
+
+message DiscoverResp {
+  repeated string endpoints = 1; // slice or array: return all available IP:Port lists
+}
+
+message Empty {} // No data in the heartbeat resp
