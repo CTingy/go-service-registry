@@ -52,8 +52,9 @@ func (s *ShardedMap) getShard(key string) *shard {
 	return s.shards[s.getShardIndex(key)]
 }
 
-// Register a new service
+// Register a new service (write)
 func (s *ShardedMap) Register(serviceName, endpoint string, ttl int64) {
+
 	shard := s.getShard(serviceName)
 
 	shard.Lock()
@@ -68,4 +69,21 @@ func (s *ShardedMap) Register(serviceName, endpoint string, ttl int64) {
 		Endpoint: endpoint,
 		LastHeartbeat: time.Now().Unix(),
 	}
+}
+
+// GetEndpoints (read)
+func (s *ShardedMap) GetEndpoints(serviceName string) []string {
+	shard := s.getShard(serviceName)
+	shard.RLock()
+	defer shard.RUnlock()
+
+	// init a String Slice
+	endpoints := make([]string, 0)
+
+	if instances, ok := shard.m[serviceName]; ok {
+		for ep := range instances {
+			endpoints = append(endpoints, ep)
+		}
+	}
+	return endpoints
 }
