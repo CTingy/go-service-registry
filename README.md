@@ -4,7 +4,6 @@ A lightweight, high-concurrency **Service Registry and Discovery** server built 
 The system uses a **sharded in-memory architecture** to minimize lock contention and achieve high throughput
 under mixed read/write workloads.
 
----
 
 ## Key Features
 
@@ -23,7 +22,6 @@ under mixed read/write workloads.
   - Fully concurrency-safe
   - Optimized for read-heavy and mixed read/write access patterns
 
----
 
 ## Architecture
 
@@ -43,19 +41,11 @@ graph TB
   Selector -->|idx = 31| Shard31[Shard 31 - RWMutex]
 ````
 
----
 
 ## Benchmark Results
 
 WIP
 
-**Analysis**
-
-* Average latency remains under **250 ns** under parallel execution
-* Sharding effectively eliminates global lock contention
-* Throughput scales well across CPU cores
-
----
 
 ## Quick Start
 
@@ -80,7 +70,6 @@ In a separate terminal, start a demo client:
 go run client/main.go -name=order-service -port=8080
 ```
 
----
 
 ## Project Structure
 
@@ -93,7 +82,6 @@ go run client/main.go -name=order-service -port=8080
 └── client/          # Demo client
 ```
 
----
 
 ## Future Improvements
 
