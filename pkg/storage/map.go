@@ -3,6 +3,7 @@ package storage
 import (
 	"hash/fnv"
 	"sync"
+	"time"
 )
 
 type InstanceInfo struct {
@@ -45,4 +46,26 @@ func (s *ShardedMap) getShardIndex(key string) int {
 	h.Write([]byte(key))
 	hashValue := h.Sum32()
 	return int(hashValue) % s.count
+}
+
+func (s *ShardedMap) getShard(key string) *shard {
+	return s.shards[s.getShardIndex(key)]
+}
+
+// Register a new service
+func (s *ShardedMap) Register(serviceName, endpoint string, ttl int64) {
+	shard := s.getShard(serviceName)
+
+	shard.Lock()
+	defer shard.Unlock()
+
+	if _, ok := shard.m[serviceName]; !ok {
+		shard.m[serviceName] = make(map[string]*InstanceInfo)
+	}
+
+	shard.m[serviceName][endpoint] = &InstanceInfo{
+		ServiceName: serviceName,
+		Endpoint: endpoint,
+		LastHeartbeat: time.Now().Unix(),
+	}
 }
