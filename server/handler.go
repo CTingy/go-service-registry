@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"log"
+
 	"go-service-registry/pkg/storage"
 	pb "go-service-registry/proto"
 )
@@ -29,7 +31,17 @@ type RegistryServer interface {
 */
 
 func (s *RegistryServer) Register(ctx context.Context, req *pb.RegisterReq) (*pb.RegisterResp, error) {
-	return &pb.RegisterResp{}, nil
+	if req.Endpoint == "" || req.ServiceName == "" {
+		log.Println("Register rejected: Missing service name or endpoint.")
+		return &pb.RegisterResp{Ttl: int32(s.defaultTTL)}, nil
+	}
+
+	// write data
+	s.store.Register(req.ServiceName, req.Endpoint, s.defaultTTL)
+	log.Printf("[Register] Service: %s, Endpoint: %s", req.ServiceName, req.Endpoint)
+
+	// return TTL to client
+	return &pb.RegisterResp{Ttl: int32(s.defaultTTL)}, nil
 }
 
 func (s *RegistryServer) Heartbeat(ctx context.Context, req *pb.HeartbeatReq) (*pb.Empty, error) {
