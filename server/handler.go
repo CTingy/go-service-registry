@@ -45,6 +45,9 @@ func (s *RegistryServer) Register(ctx context.Context, req *pb.RegisterReq) (*pb
 }
 
 func (s *RegistryServer) Heartbeat(ctx context.Context, req *pb.HeartbeatReq) (*pb.Empty, error) {
+	// just re-register and update the LastHeartbeat time
+	s.store.Register(req.ServiceName, req.Endpoint, s.defaultTTL)
+	log.Printf("[Heartbeat] Service: %s, Endpoint: %s", req.ServiceName, req.Endpoint)
 	return &pb.Empty{}, nil
 }
 
