@@ -52,5 +52,8 @@ func (s *RegistryServer) Heartbeat(ctx context.Context, req *pb.HeartbeatReq) (*
 }
 
 func (s *RegistryServer) Discover(ctx context.Context, req *pb.DiscoverReq) (*pb.DiscoverResp, error) {
-	return &pb.DiscoverResp{}, nil
+	endpoints := s.store.GetEndpoints(req.ServiceName)
+
+	log.Printf("[Discover] Query: %s, Found: %d endpoints", req.ServiceName, len(endpoints))
+	return &pb.DiscoverResp{Endpoints: endpoints}, nil
 }
