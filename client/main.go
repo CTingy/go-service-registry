@@ -1,12 +1,16 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"log"
+	"time"
 
 	"google.golang.org/grpc"
 	// build non-encryption connection
+	pb "go-service-registry/proto"
+
 	"google.golang.org/grpc/credentials/insecure"
 )
 
@@ -25,7 +29,17 @@ func main() {
 	target := "127.0.0.1:50055"
 	conn, err := grpc.NewClient(target, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		log.Fatalf("did not connect: %v", err)
+		log.Fatalf("Fail to new client: %v", err)
 	}
 	defer conn.Close()
+
+	// func NewRegistryClient(cc grpc.ClientConnInterface) RegistryClient
+	client := pb.NewRegistryClient(conn)
+	
+	// 3. Register
+	log.Printf("Registering %s at %s...", *serviceName, addr)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+
+	
 }
