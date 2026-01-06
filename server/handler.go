@@ -33,7 +33,7 @@ type RegistryServer interface {
 func (s *RegistryServer) Register(ctx context.Context, req *pb.RegisterReq) (*pb.RegisterResp, error) {
 	if req.Endpoint == "" || req.ServiceName == "" {
 		log.Println("Register rejected: Missing service name or endpoint.")
-		return &pb.RegisterResp{Ttl: int32(s.defaultTTL)}, nil
+		return &pb.RegisterResp{Ttl: s.defaultTTL}, nil
 	}
 
 	// write data
@@ -41,7 +41,7 @@ func (s *RegistryServer) Register(ctx context.Context, req *pb.RegisterReq) (*pb
 	log.Printf("[Register] Service: %s, Endpoint: %s", req.ServiceName, req.Endpoint)
 
 	// return TTL to client
-	return &pb.RegisterResp{Ttl: int32(s.defaultTTL)}, nil
+	return &pb.RegisterResp{Ttl: s.defaultTTL}, nil
 }
 
 func (s *RegistryServer) Heartbeat(ctx context.Context, req *pb.HeartbeatReq) (*pb.Empty, error) {

@@ -28,7 +28,7 @@ message RegisterReq {
 
 message RegisterResp {
   // Heartbeat interval. Defined on the server side
-  int32 ttl = 1; 
+  int64 ttl = 1; 
 }
 
 message HeartbeatReq {

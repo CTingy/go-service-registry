@@ -75,9 +75,8 @@ func (x *RegisterReq) GetEndpoint() string {
 
 type RegisterResp struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// 告訴 Client 多久要送一次心跳 (秒)
-	// Server 可以動態控制這個值 (例如 Server 負載高時調大一點)
-	Ttl           int32 `protobuf:"varint,1,opt,name=ttl,proto3" json:"ttl,omitempty"`
+	// Heartbeat interval. Defined on the server side
+	Ttl           int64 `protobuf:"varint,1,opt,name=ttl,proto3" json:"ttl,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -112,7 +111,7 @@ func (*RegisterResp) Descriptor() ([]byte, []int) {
 	return file_proto_registry_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *RegisterResp) GetTtl() int32 {
+func (x *RegisterResp) GetTtl() int64 {
 	if x != nil {
 		return x.Ttl
 	}
@@ -304,7 +303,7 @@ const file_proto_registry_proto_rawDesc = "" +
 	"\fservice_name\x18\x01 \x01(\tR\vserviceName\x12\x1a\n" +
 	"\bendpoint\x18\x02 \x01(\tR\bendpoint\" \n" +
 	"\fRegisterResp\x12\x10\n" +
-	"\x03ttl\x18\x01 \x01(\x05R\x03ttl\"M\n" +
+	"\x03ttl\x18\x01 \x01(\x03R\x03ttl\"M\n" +
 	"\fHeartbeatReq\x12!\n" +
 	"\fservice_name\x18\x01 \x01(\tR\vserviceName\x12\x1a\n" +
 	"\bendpoint\x18\x02 \x01(\tR\bendpoint\"0\n" +
