@@ -3,7 +3,7 @@ syntax = "proto3";
 package registry;
 
 // location of compiled code
-option go_package = "go-service-registry/proto";
+option go_package = "github.com/CTingy/go-service-registry/proto";
 
 // service interfaces
 service Registry {

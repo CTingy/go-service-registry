@@ -7,11 +7,12 @@
 package proto
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -315,7 +316,7 @@ const file_proto_registry_proto_rawDesc = "" +
 	"\bRegistry\x129\n" +
 	"\bRegister\x12\x15.registry.RegisterReq\x1a\x16.registry.RegisterResp\x124\n" +
 	"\tHeartbeat\x12\x16.registry.HeartbeatReq\x1a\x0f.registry.Empty\x129\n" +
-	"\bDiscover\x12\x15.registry.DiscoverReq\x1a\x16.registry.DiscoverRespB\x1bZ\x19go-service-registry/protob\x06proto3"
+	"\bDiscover\x12\x15.registry.DiscoverReq\x1a\x16.registry.DiscoverRespB\x1bZ\x19github.com/CTingy/go-service-registry/protob\x06proto3"
 
 var (
 	file_proto_registry_proto_rawDescOnce sync.Once

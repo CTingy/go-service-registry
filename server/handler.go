@@ -4,8 +4,8 @@ import (
 	"context"
 	"log"
 
-	"go-service-registry/pkg/storage"
-	pb "go-service-registry/proto"
+	"github.com/CTingy/go-service-registry/pkg/storage"
+	pb "github.com/CTingy/go-service-registry/proto"
 )
 
 type RegistryServer struct {

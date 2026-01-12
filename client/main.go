@@ -9,7 +9,7 @@ import (
 
 	"google.golang.org/grpc"
 	// build non-encryption connection
-	pb "go-service-registry/proto"
+	pb "github.com/CTingy/go-service-registry/proto"
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/credentials/insecure"

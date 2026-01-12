@@ -1,4 +1,4 @@
-module go-service-registry
+module github.com/CTingy/go-service-registry
 
 go 1.24.3
 
