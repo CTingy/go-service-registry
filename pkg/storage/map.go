@@ -65,8 +65,8 @@ func (s *ShardedMap) Register(serviceName, endpoint string, ttl int64) {
 	}
 
 	sh.m[serviceName][endpoint] = &InstanceInfo{
-		ServiceName: serviceName,
-		Endpoint: endpoint,
+		ServiceName:   serviceName,
+		Endpoint:      endpoint,
 		LastHeartbeat: time.Now().Unix(),
 	}
 }
