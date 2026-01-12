@@ -44,7 +44,19 @@ graph TB
 
 ## Benchmark Results
 
-WIP
+
+Benchmarks were run on an **Apple M1 (8-core)** machine.
+The in-memory storage engine sustains over **4 million operations per second**.
+
+```bash
+goos: darwin
+goarch: arm64
+pkg: go-service-registry/pkg/storage
+cpu: Apple M1
+
+BenchmarkRegister-8      5993856    239.6 ns/op   (~4.1M ops/sec)
+BenchmarkDiscover-8      4779848    246.2 ns/op   (~4.0M ops/sec)
+```
 
 
 ## Quick Start
