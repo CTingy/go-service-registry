@@ -1,5 +1,8 @@
 # Go High-Performance Service Registry
 
+![Go Report Card](https://goreportcard.com/badge/github.com/CTingy/go-service-registry)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+
 A lightweight, high-concurrency **Service Registry and Discovery** server built with **Go** and **gRPC**.
 The system uses a **sharded in-memory architecture** to minimize lock contention and achieve high throughput
 under mixed read/write workloads.
