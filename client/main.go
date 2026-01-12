@@ -37,7 +37,7 @@ func main() {
 
 	// func NewRegistryClient(cc grpc.ClientConnInterface) RegistryClient
 	client := pb.NewRegistryClient(conn)
-	
+
 	// 3. Register
 	log.Printf("Registering %s at %s...", *serviceName, addr)
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
@@ -45,16 +45,42 @@ func main() {
 
 	resp, err := client.Register(ctx, &pb.RegisterReq{
 		ServiceName: *serviceName,
-		Endpoint: addr,
+		Endpoint:    addr,
 	})
 	if err != nil {
-		if status.Code(err) == codes.DeadlineExceeded{
+		if status.Code(err) == codes.DeadlineExceeded {
 			// grpc status code: 4
 			log.Println("Register Deadline Exceeded")
 		} else {
-			log.Fatal("Register failed: %v", err)
+			log.Printf("Register failed: %v", err)
 		}
 		return
 	}
-	
+
+	serverTTL := time.Duration(resp.Ttl)
+	if serverTTL <= 0 {
+		serverTTL = 15
+	}
+	log.Printf("Register Success! Server TTL: %d seconds", serverTTL)
+
+	// 4. Heartbeat
+	go func() {
+		// shorter heartbeat interval than ttl. Best practice: ttl/3
+		// TODO: reset timer if get a new serverTTL
+		ticker := time.NewTicker(serverTTL * time.Second / 3)
+		for range ticker.C {
+			log.Printf("Sending heartbeat for %s...", *serviceName)
+
+			// TODO: retry if err
+			_, err := client.Heartbeat(context.Background(), &pb.HeartbeatReq{
+				ServiceName: *serviceName,
+				Endpoint:    addr,
+			})
+
+			if err != nil {
+				log.Printf("Heartbeat failed: %v", err)
+			}
+		}
+	}()
+
 }
