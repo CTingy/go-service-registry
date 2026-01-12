@@ -55,6 +55,7 @@ The in-memory storage engine sustains over **5.3 million operations per second**
 ```text
 BenchmarkRegister-8      6118419               187.3 ns/op           192 B/op          4 allocs/op
 BenchmarkDiscover-8      5664952               208.8 ns/op           512 B/op          6 allocs/op
+```
 
 ## Quick Start
 
