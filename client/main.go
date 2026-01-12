@@ -83,4 +83,21 @@ func main() {
 		}
 	}()
 
+	// 5. Discover
+	for {
+		// For demo purpose, keep main thread in the loop
+		time.Sleep(3 * time.Second)
+
+		targetService := "auth-service" // assume we always check this service
+		log.Printf("Discovering %s...", targetService)
+
+		dResp, err := client.Discover(context.Background(), &pb.DiscoverReq{
+			ServiceName: targetService,
+		})
+		if err != nil {
+			log.Printf("Discover failed: %v", err)
+		} else {
+			log.Printf("Found endpoints: %v", dResp.Endpoints)
+		}
+	}
 }
