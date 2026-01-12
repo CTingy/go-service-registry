@@ -41,23 +41,20 @@ graph TB
   Selector -->|idx = 31| Shard31[Shard 31 - RWMutex]
 ````
 
-
 ## Benchmark Results
 
+Benchmarks were run on an **Apple M1 (8-core)** machine using Go 1.2x.
+The in-memory storage engine sustains over **5.3 million operations per second** with low memory allocation overhead.
 
-Benchmarks were run on an **Apple M1 (8-core)** machine.
-The in-memory storage engine sustains over **4 million operations per second**.
+### Run Environment
+* **OS**: macOS (Darwin/arm64)
+* **CPU**: Apple M1
+* **Command**: `go test -bench=. -benchmem -run=^$ .`
 
-```bash
-goos: darwin
-goarch: arm64
-pkg: go-service-registry/pkg/storage
-cpu: Apple M1
-
-BenchmarkRegister-8      5993856    239.6 ns/op   (~4.1M ops/sec)
-BenchmarkDiscover-8      4779848    246.2 ns/op   (~4.0M ops/sec)
-```
-
+### Results
+```text
+BenchmarkRegister-8      6118419               187.3 ns/op           192 B/op          4 allocs/op
+BenchmarkDiscover-8      5664952               208.8 ns/op           512 B/op          6 allocs/op
 
 ## Quick Start
 
