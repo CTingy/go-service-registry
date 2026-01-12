@@ -49,7 +49,11 @@ The in-memory storage engine sustains over **5.3 million operations per second**
 ### Run Environment
 * **OS**: macOS (Darwin/arm64)
 * **CPU**: Apple M1
-* **Command**: `go test -bench=. -benchmem -run=^$ .`
+* **Command**: 
+```sh
+cd pkg/storage/
+go test -bench=. -benchmem -run=^$ .
+```
 
 ### Results
 ```text
