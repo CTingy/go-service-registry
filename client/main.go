@@ -11,7 +11,9 @@ import (
 	// build non-encryption connection
 	pb "go-service-registry/proto"
 
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/status"
 )
 
 func main() {
@@ -41,5 +43,18 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
+	resp, err := client.Register(ctx, &pb.RegisterReq{
+		ServiceName: *serviceName,
+		Endpoint: addr,
+	})
+	if err != nil {
+		if status.Code(err) == codes.DeadlineExceeded{
+			// grpc status code: 4
+			log.Println("Register Deadline Exceeded")
+		} else {
+			log.Fatal("Register failed: %v", err)
+		}
+		return
+	}
 	
 }
